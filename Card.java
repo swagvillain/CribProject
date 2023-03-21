@@ -63,20 +63,20 @@ public class Card implements Comparable{
         return false;
     }
 
-    @Override
-    public int compareTo(Card otherCard){
-        if(this.getValue()<10 || otherCard.getValue()<10){
-            return this.getValue()-otherCard.getValue();
-        }else if(!this.rank.equals("Q") && !otherCard.rank.equals("Q")){
-            return this.rank.compareTo(otherCard.rank);
-        }else if(this.rank.equals("Q") && otherCard.rank.equals("K")){
-            return -1;}
-        else if(this.rank.equals("Q") && otherCard.rank.equals("Q")){
-            return 0;
-        }else{
-            return 1;
-        }
-    }
+//    @Override
+//    public int compareTo(Card otherCard){
+//        if(this.getValue()<10 || otherCard.getValue()<10){
+//            return this.getValue()-otherCard.getValue();
+//        }else if(!this.rank.equals("Q") && !otherCard.rank.equals("Q")){
+//            return this.rank.compareTo(otherCard.rank);
+//        }else if(this.rank.equals("Q") && otherCard.rank.equals("K")){
+//            return -1;}
+//        else if(this.rank.equals("Q") && otherCard.rank.equals("Q")){
+//            return 0;
+//        }else{
+//            return 1;
+//        }
+//    }
 
     @Override
     public int compareTo(Object o) {

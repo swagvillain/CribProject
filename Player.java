@@ -7,6 +7,7 @@ import java.util.Random;
 public class Player {
 	
 	private boolean isDealer;
+	private String name;
 	
 	private int score;
 	
@@ -19,7 +20,8 @@ public class Player {
 	
 	private ArrayList<Card> hand = new ArrayList<>();
 	
-	public Player() {
+	public Player(String name) {
+		this.name = name;
 		this.isDealer = false;
 		this.score = 0;
 	}
@@ -68,9 +70,17 @@ public class Player {
 	public void setDealer() {
 		this.isDealer = true;
 	}
+
+	public void toggleDealer(){
+		this.isDealer = !this.isDealer;
+	}
 	
 	public boolean getDealer() {
 		return this.isDealer;
+	}
+
+	public String getName(){
+		return this.name;
 	}
 	
 	public int getScore() {

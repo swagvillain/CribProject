@@ -72,6 +72,6 @@ public class CribbageGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        CribbageGUI gui = new CribbageGUI();
+        //CribbageGUI gui = new CribbageGUI();
     }
 }

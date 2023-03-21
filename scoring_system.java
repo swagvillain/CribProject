@@ -30,24 +30,24 @@ public class scoring_system {
             }
         }
 
-        // Check for runs
-        List<Card> allCards = new ArrayList<>(hand);
-        allCards.add(cardTurnedUp);
-        Collections.sort(allCards);
-        int runLength = 1;
-        for (int i = 1; i < allCards.size(); i++) {
-            if (allCards.get(i).getRank().getValue() == allCards.get(i - 1).getRank().getValue() + 1) {
-                runLength++;
-            } else {
-                if (runLength >= 3) {
-                    score += runLength;
-                }
-                runLength = 1;
-            }
-        }
-        if (runLength >= 3) {
-            score += runLength;
-        }
+//        // Check for runs
+//        List<Card> allCards = new ArrayList<>(hand);
+//        allCards.add(cardTurnedUp);
+//        Collections.sort(allCards);
+//        int runLength = 1;
+//        for (int i = 1; i < allCards.size(); i++) {
+//            if (allCards.get(i).getRank().getValue() == allCards.get(i - 1).getRank().getValue() + 1) {
+//                runLength++;
+//            } else {
+//                if (runLength >= 3) {
+//                    score += runLength;
+//                }
+//                runLength = 1;
+//            }
+//        }
+//        if (runLength >= 3) {
+//            score += runLength;
+//        }
 
         // Check for flushes
         boolean isFlush = true;
@@ -69,11 +69,11 @@ public class scoring_system {
     }
 
     // Score a crib of cards
-    public static int scoreCrib(List<Card> crib, Card starter) {
+    public static int scoreCrib(List<Card> crib, Card cardTurnedUp) {
         int score = 0;
 
         // Check for 15s
-        List<List<Card>> fifteenCombinations = combinationsForFifteens(crib, starter);
+        List<List<Card>> fifteenCombinations = combinationsForFifteens(crib, cardTurnedUp);
         for (List<Card> combo : fifteenCombinations) {
             if (sumValues(combo) == MAX_CRIB_SCORE) {
                 score += 2;
@@ -81,33 +81,33 @@ public class scoring_system {
         }
 
         // Check for pairs
-        List<List<Card>> pairCombinations = combinationsForPairs(crib, starter);
+        List<List<Card>> pairCombinations = combinationsForPairs(crib, cardTurnedUp);
         for (List<Card> combo : pairCombinations) {
             if (combo.size() == 2 && combo.get(0).getRank() == combo.get(1).getRank()) {
                 score += 2;
             }
         }
 
-        // Check for runs
-        List<Card> allCards = new ArrayList<>(crib);
-        allCards.add(starter);
-        Collections.sort(allCards);
-        int runLength = 1;
-        for (int i = 1; i < allCards.size(); i++) {
-            if (allCards.get(i).getRank().getValue() == allCards.get(i - 1).getRank().getValue() + 1) {
-            runLength++;
-        } else{
-            if (runLength >= 3) {
-                score += runLength;
-            }
-            runLength = 1;
-        }
-    }
-        if(runLength >=3)
-
-    {
-        score += runLength;
-    }
+//        // Check for runs
+//        List<Card> allCards = new ArrayList<>(crib);
+//        allCards.add(cardTurnedUp);
+//        Collections.sort(allCards);
+//        int runLength = 1;
+//        for (int i = 1; i < allCards.size(); i++) {
+//            if (allCards.get(i).getRank().getValue() == allCards.get(i - 1).getRank().getValue() + 1) {
+//            runLength++;
+//        } else{
+//            if (runLength >= 3) {
+//                score += runLength;
+//            }
+//            runLength = 1;
+//        }
+//    }
+//        if(runLength >=3)
+//
+//    {
+//        score += runLength;
+//    }
 
     // Check for flushes
     boolean isFlush = true;
@@ -120,7 +120,7 @@ public class scoring_system {
             break;
         }
     }
-    if(isFlush &&starter.getSuit()==crib.get(0).
+    if(isFlush &&cardTurnedUp.getSuit()==crib.get(0).
 
     getSuit())
 
