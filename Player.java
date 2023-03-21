@@ -13,11 +13,11 @@ public class Player {
 	private Random rand = new Random();
 	
 	
-	private static ArrayList<CribbageCard> deck = new ArrayList<>();
+	private static ArrayList<Card> deck = new ArrayList<>();
 	
-	private static ArrayList<CribbageCard> cribHand = new ArrayList<>();
+	private static ArrayList<Card> cribHand = new ArrayList<>();
 	
-	private ArrayList<CribbageCard> hand = new ArrayList<>();
+	private ArrayList<Card> hand = new ArrayList<>();
 	
 	public Player() {
 		this.isDealer = false;
@@ -81,12 +81,12 @@ public class Player {
 		score += points;
 	}
 	
-	public void discardCard(CribbageCard c) {
+	public void discardCard(Card c) {
 		this.hand.remove(c);
 		Player.cribHand.add(c);
 	}
 	
-	public CribbageCard playCard(CribbageCard c) {
+	public Card playCard(Card c) {
 		for(int i = 0; i < hand.size(); i++) {
 			if(hand.get(i).equals(c)) {
 				return hand.get(i);
@@ -96,7 +96,7 @@ public class Player {
 		return null;
 	}
 	
-	public ArrayList<CribbageCard> getCribHand(){
+	public ArrayList<Card> getCribHand(){
 		if(isDealer == true) {
 			return Player.cribHand;
 		}

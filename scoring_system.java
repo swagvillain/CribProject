@@ -11,27 +11,27 @@ public class scoring_system {
     private static final int MAX_CRIB_SCORE = 29;
 
     // Score a hand of cards
-    public static int score(List<CribbageCard> hand, CribbageCard cardTurnedUp) {
+    public static int score(List<Card> hand, Card cardTurnedUp) {
         int score = 0;
 
         // Check for 15s
-        List<List<CribbageCard>> fifteenCombinations = combinationsForFifteens(hand, cardTurnedUp);
-        for (List<CribbageCard> combo : fifteenCombinations) {
+        List<List<Card>> fifteenCombinations = combinationsForFifteens(hand, cardTurnedUp);
+        for (List<Card> combo : fifteenCombinations) {
             if (sumValues(combo) == MAX_HAND_SCORE) {
                 score += 2;
             }
         }
 
         // Check for pairs
-        List<List<CribbageCard>> pairCombinations = combinationsForPairs(hand, cardTurnedUp);
-        for (List<CribbageCard> combo : pairCombinations) {
+        List<List<Card>> pairCombinations = combinationsForPairs(hand, cardTurnedUp);
+        for (List<Card> combo : pairCombinations) {
             if (combo.size() == 2 && combo.get(0).getRank() == combo.get(1).getRank()) {
                 score += 2;
             }
         }
 
         // Check for runs
-        List<CribbageCard> allCards = new ArrayList<>(hand);
+        List<Card> allCards = new ArrayList<>(hand);
         allCards.add(cardTurnedUp);
         Collections.sort(allCards);
         int runLength = 1;
@@ -57,7 +57,7 @@ public class scoring_system {
                 break;
             }
         }
-        if (isFlush && cardTurnedUp.getSuit() == hand.get(0).getSuit()) {
+        if (isFlush && cardTurnedUp.getSuit().equals(hand.get(0).getSuit())) {
             if (hand.size() == 4) {
                 score += 4; // Four-card flush
             } else {
@@ -69,27 +69,27 @@ public class scoring_system {
     }
 
     // Score a crib of cards
-    public static int scoreCrib(List<CribbageCard> crib, CribbageCard starter) {
+    public static int scoreCrib(List<Card> crib, Card starter) {
         int score = 0;
 
         // Check for 15s
-        List<List<CribbageCard>> fifteenCombinations = combinationsForFifteens(crib, starter);
-        for (List<CribbageCard> combo : fifteenCombinations) {
+        List<List<Card>> fifteenCombinations = combinationsForFifteens(crib, starter);
+        for (List<Card> combo : fifteenCombinations) {
             if (sumValues(combo) == MAX_CRIB_SCORE) {
                 score += 2;
             }
         }
 
         // Check for pairs
-        List<List<CribbageCard>> pairCombinations = combinationsForPairs(crib, starter);
-        for (List<CribbageCard> combo : pairCombinations) {
+        List<List<Card>> pairCombinations = combinationsForPairs(crib, starter);
+        for (List<Card> combo : pairCombinations) {
             if (combo.size() == 2 && combo.get(0).getRank() == combo.get(1).getRank()) {
                 score += 2;
             }
         }
 
         // Check for runs
-        List<CribbageCard> allCards = new ArrayList<>(crib);
+        List<Card> allCards = new ArrayList<>(crib);
         allCards.add(starter);
         Collections.sort(allCards);
         int runLength = 1;
@@ -131,14 +131,14 @@ public class scoring_system {
     return score;
 }
     // Get all combinations of cards that add up to 15
-    private static List<List<CribbageCard>> combinationsForFifteens(List<CribbageCard> hand, CribbageCard starter) {
-        List<List<CribbageCard>> combinations = new ArrayList<>();
-        List<CribbageCard> allCards = new ArrayList<>(hand);
+    private static List<List<Card>> combinationsForFifteens(List<Card> hand, Card starter) {
+        List<List<Card>> combinations = new ArrayList<>();
+        List<Card> allCards = new ArrayList<>(hand);
         allCards.add(starter);
         int numCards = allCards.size();
 
         for (int i = 0; i < (1 << numCards); i++) {
-            List<CribbageCard> combo = new ArrayList<>();
+            List<Card> combo = new ArrayList<>();
             int sum = 0;
             for (int j = 0; j < numCards; j++) {
                 if ((i & (1 << j)) != 0) {
@@ -155,14 +155,14 @@ public class scoring_system {
     }
 
     // Get all pairs of cards
-    private static List<List<CribbageCard>> combinationsForPairs(List<CribbageCard> hand, CribbageCard starter) {
-        List<List<CribbageCard>> combinations = new ArrayList<>();
-        List<CribbageCard> allCards = new ArrayList<>(hand);
+    private static List<List<Card>> combinationsForPairs(List<Card> hand, Card starter) {
+        List<List<Card>> combinations = new ArrayList<>();
+        List<Card> allCards = new ArrayList<>(hand);
         allCards.add(starter);
 
         for (int i = 0; i < allCards.size(); i++) {
             for (int j = i+1; j < allCards.size(); j++) {
-                List<CribbageCard> combo = new ArrayList<>();
+                List<Card> combo = new ArrayList<>();
                 combo.add(allCards.get(i));
                 combo.add(allCards.get(j));
                 combinations.add(combo);
@@ -173,9 +173,9 @@ public class scoring_system {
     }
 
     // Get the sum of the values of a list of cards
-    private static int sumValues(List<CribbageCard> cards) {
+    private static int sumValues(List<Card> cards) {
         int sum = 0;
-        for (CribbageCard card : cards) {
+        for (Card card : cards) {
             sum += card.getValue();
         }
         return sum;

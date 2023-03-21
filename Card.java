@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CribbageCard {
+public class Card implements Comparable{
     public static final String[] RANKS = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public static final String[] SUITS = {"C", "D", "H", "S"};
 
     private String rank;
     private String suit;
 
-    public CribbageCard(String rank, String suit) {
+    public Card(String rank, String suit) {
         //checking validity and returns invalid message if its not valid
         if (!"A23456789TJQK".contains(rank) || !"CDHS".contains(suit)) {
             throw new IllegalArgumentException("Invalid rank or suit");
@@ -62,16 +62,36 @@ public class CribbageCard {
         }
         return false;
     }
+
+    @Override
+    public int compareTo(Card otherCard){
+        if(this.getValue()<10 || otherCard.getValue()<10){
+            return this.getValue()-otherCard.getValue();
+        }else if(!this.rank.equals("Q") && !otherCard.rank.equals("Q")){
+            return this.rank.compareTo(otherCard.rank);
+        }else if(this.rank.equals("Q") && otherCard.rank.equals("K")){
+            return -1;}
+        else if(this.rank.equals("Q") && otherCard.rank.equals("Q")){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
 
  class CribbageDeck {
-    private List<CribbageCard> cards;
+    private List<Card> cards;
 
     public CribbageDeck() {
-        cards = new ArrayList<CribbageCard>();
-        for (String rank : CribbageCard.RANKS) {
-            for (String suit : CribbageCard.SUITS) {
-                cards.add(new CribbageCard(rank, suit));
+        cards = new ArrayList<Card>();
+        for (String rank : Card.RANKS) {
+            for (String suit : Card.SUITS) {
+                cards.add(new Card(rank, suit));
             }
         }
     }
@@ -80,19 +100,19 @@ public class CribbageCard {
         Collections.shuffle(cards);
     }
 
-    public CribbageCard deal() {
+    public Card deal() {
         return cards.remove(0);
     }
 }
 
  class CribbageHand {
-     private List<CribbageCard> cards;
+     private List<Card> cards;
 
      public CribbageHand() {
-         cards = new ArrayList<CribbageCard>();
+         cards = new ArrayList<Card>();
      }
 
-     public void addCard(CribbageCard card) {
+     public void addCard(Card card) {
          cards.add(card);
      }
 
@@ -100,8 +120,8 @@ public class CribbageCard {
          int score = 0;
 
          // check for pairs of face cards
-         List<CribbageCard> faceCards = new ArrayList<CribbageCard>();
-         for (CribbageCard card : cards) {
+         List<Card> faceCards = new ArrayList<Card>();
+         for (Card card : cards) {
              if (card.getValue() == 10) {
                  faceCards.add(card);
              }
@@ -112,8 +132,8 @@ public class CribbageCard {
 
 
          // check for runs of three or more cards
-         public int scoreRun(List<CribbageCard> cards) {
-             int score = 0;
+
+
              int playLength = 1;
              Collections.sort(cards, (c1, c2) -> c1.getValue() - c2.getValue());//to sort the card
 
@@ -131,6 +151,5 @@ public class CribbageCard {
              return score;
          }
      }
- }
 
 
