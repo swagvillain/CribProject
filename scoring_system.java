@@ -143,7 +143,7 @@ public class scoring_system {
             for (int j = 0; j < numCards; j++) {
                 if ((i & (1 << j)) != 0) {
                     combo.add(allCards.get(j));
-                    sum += allCards.get(j).getValue();
+                    sum += allCards.get(j).getCribCount();
                 }
             }
             if (sum == MAX_SCORE) {
@@ -176,7 +176,7 @@ public class scoring_system {
     private static int sumValues(List<Card> cards) {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getValue();
+            sum += card.getCribCount();
         }
         return sum;
     }

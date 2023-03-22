@@ -3,19 +3,20 @@ import java.util.Collections;
 
 public class Main {
 
+    static Player p1 = new Player("Human");
+    static Player p2 = new Player("Computer");
+    static CribbageBoard board = new CribbageBoard();
+
     public static void main(String[] args) {
         playCrib();
     }
 
     public static void playCrib(){
-        Player p1 = new Player("Human");
-        Player p2 = new Player("Computer");
-        CribbageDeck deck = new CribbageDeck();
-        CribbageBoard board = new CribbageBoard();
-
         //determine who deals first via cutting or random
         determineDealer(p1, p2);
-        System.out.println(determineDealer(p1, p2).getName()+" is dealer");
+        System.out.println(determineDealer(p1, p2).getName()+" is dealer first");
+
+        playRound();
 
         //do a hand, then swap dealer
         //repeat
@@ -23,6 +24,11 @@ public class Main {
     }
 
     public static void playRound(){
+        CribbageDeck deck = new CribbageDeck();
+        deck.shuffle();
+        deck.deal();
+
+
 
     }
 

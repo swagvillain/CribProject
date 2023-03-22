@@ -19,6 +19,10 @@ public class Player {
 	private static ArrayList<Card> cribHand = new ArrayList<>();
 	
 	private ArrayList<Card> hand = new ArrayList<>();
+
+	public void receiveCard(Card card){
+		hand.add(card);
+	}
 	
 	public Player(String name) {
 		this.name = name;
