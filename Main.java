@@ -45,28 +45,87 @@ public class Main {
 
     public static void peggingPhase(){
         int peggingCount = 0;
-        System.out.println("It's the pegging phase. The current count is 0. The non-dealer goes first.");
+        boolean p1CanGo = true;
+        boolean p2CanGo = true;
+
+        ArrayList<Card> p1Hand = p1.getHand();
+        ArrayList<Card> p2Hand = p2.getHand();
+        ArrayList<Card> playedCards = new ArrayList<>(5);
+
+        System.out.println("\nIt's the pegging phase. The non-dealer goes first.");
 
 
 
         System.out.println("The count is at: " + peggingCount);
-        if(p1.getDealer()){
-            humanPegging(p1);
+        if(p1.getDealer()){//add other parts to match in the while loop
+            humanPegging(p1, p1Hand, peggingCount, playedCards);
         }
-        while(true){//this NEEDS TO CHANGE
-            computerPegging();
-            humanPegging();
+        while(peggingCount < 31 && (p1CanGo||p2CanGo)){
+            int k = computerPegging(p2, p2Hand, peggingCount, playedCards);
+            peggingCount += k;
+            if(k==0)p2CanGo=false;
+
+            int l = humanPegging(p1, p1Hand, peggingCount, playedCards);
+            peggingCount += l;
+            if(l==0)p1CanGo=false;
         }
 
         System.out.println("Thus concludes the pegging phase.");
     }
 
-    public static int humanPegging(){
-        return 0;
+    private static int humanPegging(Player player, ArrayList<Card> hand, int pegCount, ArrayList<Card> playedCards){
+        int cardToPlay;
+        int cardVal;
+        Scanner scanner = new Scanner(System.in);
+
+
+        System.out.println("These are the played cards: ");
+        System.out.println(playedCards);
+        System.out.println("The pegging count is at "+pegCount);
+
+        if(!playerCanGo(pegCount, hand)) {
+            System.out.println("You can't go.");
+            return 0;
+        }
+
+        System.out.println(hand);
+        System.out.println("Your turn to peg. This is your hand. Which card would you like to play? Please enter a number 1-"+hand.size());
+        cardToPlay = scanner.nextInt();
+        System.out.println("You played "+hand.get(cardToPlay-1));
+        cardVal = hand.get(cardToPlay-1).getCribCount();
+        System.out.println("The count is at "+(pegCount+cardVal));
+        playedCards.add(hand.get(cardToPlay-1));
+        hand.remove(cardToPlay-1);
+
+
+
+        return cardVal;
     }
 
-    public static int computerPegging(){
-        return 0;
+    public static boolean playerCanGo(int count, ArrayList<Card> hand){
+        boolean canGo = false;
+
+        for (Card card : hand) {
+            if (31 - count > card.getCribCount())
+                canGo = true;
+        }
+        return canGo;
+    }
+
+    public static int computerPegging(Player player, ArrayList<Card> hand, int pegCount, ArrayList<Card> playedCards){
+
+        if(!playerCanGo(pegCount, hand)) {
+            System.out.println("Opponent can't go.");
+            return 0;
+        }
+
+        int cardVal = hand.get(0).getCribCount();
+
+        System.out.println("Your opponent played "+hand.get(0));
+        playedCards.add(hand.get(0));
+        hand.remove(0);
+
+        return cardVal;
     }
 
     public static void havePlayersDiscardToCrib(){
