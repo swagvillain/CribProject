@@ -243,7 +243,58 @@ public class Card {
             Main.p2.receiveCard(cards.get(i+6));
         }
     }
+
+    public Card cutCardTurnedUp(){
+        return(cards.get(25));
+    }
 }
+
+ class CribbageHand {
+     private ArrayList<Card> cards;
+
+     public CribbageHand() {
+         cards = new ArrayList<Card>();
+     }
+
+     public void add(Card card) {
+         cards.add(card);
+     }
+
+     public int score() {
+         int score = 0;
+
+         // check for pairs of face cards
+         ArrayList<Card> faceCards = new ArrayList<Card>();
+         for (Card card : cards) {
+             if (card.getCribCount() == 10) {
+                 faceCards.add(card);
+             }
+         }
+         if (faceCards.size() >= 2 && faceCards.get(0).equals(faceCards.get(1))) {
+             score += 2;
+         }
+
+
+         // check for runs of three or more cards
+
+
+             int playLength = 1;
+             Collections.sort(cards, (c1, c2) -> c1.getCribCount() - c2.getCribCount());//to sort the card
+
+             for (int i = 0; i < cards.size() - 1; i++) {//If two adjacent cards are consecutive, we increment the runLength variable. If runLength is higher than or equal to 3, its value is added to the final score. If the cards are not sequential, runLength is reset to 1.
+                 if (cards.get(i).getCribCount() == cards.get(i + 1).getCribCount() - 1) {
+                     playLength++;
+                     if (playLength >= 3) {
+                         score += playLength;
+                     }
+                 } else {
+                     playLength = 1;
+                 }// playLength variable - keep track of the length of the current run
+             }
+
+             return score;
+         }
+     }
 
 
 

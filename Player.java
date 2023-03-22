@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Player {
 	
-	private boolean isDealer;
+	private boolean isDealer = false;
 	private String name;
 	
 	private int score;
@@ -16,12 +16,16 @@ public class Player {
 	
 	private static ArrayList<Card> deck = new ArrayList<>();
 	
-	private static ArrayList<Card> cribHand = new ArrayList<>();
+	//private static ArrayList<Card> cribHand = new ArrayList<>();
 	
 	private ArrayList<Card> hand = new ArrayList<>();
 
 	public void receiveCard(Card card){
 		hand.add(card);
+	}
+
+	public ArrayList<Card> getHand(){
+		return hand;
 	}
 	
 	public Player(String name) {
@@ -97,7 +101,7 @@ public class Player {
 	
 	public void discardCard(Card c) {
 		this.hand.remove(c);
-		Player.cribHand.add(c);
+		Main.crib.add(c);
 	}
 	
 	public Card playCard(Card c) {
@@ -110,11 +114,11 @@ public class Player {
 		return null;
 	}
 	
-	public ArrayList<Card> getCribHand(){
-		if(isDealer == true) {
-			return Player.cribHand;
-		}
-		System.out.println("You are not the dealer this round");
-		return null;
-	}
+//	public ArrayList<Card> getCribHand(){
+//		if(isDealer == true) {
+//			return Player.cribHand;
+//		}
+//		System.out.println("You are not the dealer this round");
+//		return null;
+//	}
 }
