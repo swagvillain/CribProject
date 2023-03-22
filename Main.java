@@ -40,7 +40,9 @@ public class Main {
     }
 
     public static void countingPhase(){
-
+        //countNondealerHand();
+        //countDealerHand();
+        //countCrib();
     }
 
     public static void peggingPhase(){
